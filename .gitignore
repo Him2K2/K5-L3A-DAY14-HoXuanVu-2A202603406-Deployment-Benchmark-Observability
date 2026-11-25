@@ -4,6 +4,12 @@
 .env.production
 .env.*
 !.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+*-credentials.json
 
 # ── Python ──────────────────────────��────────────────────
 __pycache__/
@@ -34,3 +40,13 @@ Thumbs.db
 # ── Docker volumes (local dev) ─────────────────────��──────
 data/
 volumes/
+
+# WSL virtual environment created at the repository root
+/bin/
+/include/
+/lib/
+/lib64
+/pyvenv.cfg
+
+# Local-only Grafana port override (not part of the lab submission)
+06-lab-complete/benchmark-observability/production/docker-compose.override.yml

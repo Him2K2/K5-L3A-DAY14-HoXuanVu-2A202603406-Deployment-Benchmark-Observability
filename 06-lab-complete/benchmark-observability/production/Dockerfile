@@ -25,8 +25,11 @@ RUN chown -R agent:agent /app
 
 USER agent
 
+# HOME phải trỏ tới /home/agent để Python tìm được user-site (/home/agent/.local/...)
+# — user `agent` có home mặc định /app nên nếu thiếu dòng này sẽ "No module named 'uvicorn'".
+ENV HOME=/home/agent
 ENV PATH=/home/agent/.local/bin:$PATH
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/app:/home/agent/.local/lib/python3.11/site-packages
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
