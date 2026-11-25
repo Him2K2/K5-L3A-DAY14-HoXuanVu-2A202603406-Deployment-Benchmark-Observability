@@ -154,8 +154,8 @@ Server: nginx
 ### Exercise 3.1 / 3.2: Deploy (nền tảng chính)
 
 - **Nền tảng chính:** Railway (builder `DOCKERFILE`).
-- **URL public:** https://agent-api-production-f5fdfe9c.up.railway.app — app và Redis đã deploy; `/health`=200, `/ready`=200, `/ask` không key=401.
-- **Còn cần làm:** tự đặt `AGENT_API_KEY` trong Railway Dashboard rồi xác nhận `/ask` với key hợp lệ trả 200. Không gửi key qua chat hoặc commit vào repo.
+- **URL public:** https://agent-api-production-f5fdfe9c.up.railway.app — `/health`=200, `/ready`=200, `/ask` không key=401, `/ask` có key=200 (2026-11-25 21:35:27). Ảnh: `screenshots/dashboard.png`, `screenshots/running.png`, `screenshots/test.png`.
+- **API key:** `AGENT_API_KEY` đặt trong Railway Variables, không commit vào repo.
 - **Biến môi trường:** `REDIS_URL` đã liên kết tới Redis add-on; các biến không bí mật gồm `RATE_LIMIT_PER_MINUTE`, `DAILY_BUDGET_USD`, `MONTHLY_BUDGET_USD`, `ENVIRONMENT`, `LOG_LEVEL`, `DEBUG` đã được cấu hình.
 - **4 lệnh tự kiểm CP6** (`/health`=200, `/ready`=200, `/ask` không key=401, `/ask` có key=200): xem `DEPLOYMENT.md`.
 
@@ -354,4 +354,5 @@ Chi tiết trong cùng lần chạy: image 160 MB; `docker stop` exit code 0 sau
   - Sửa `benchmark-observability/production/Dockerfile` của đề (đặt `HOME`, `PYTHONPATH`) vì container báo `No module named 'uvicorn'`.
   - Chạy các lệnh đo Part 1, 2, 4, 5, load test, eval, Exercise 7.4, thí nghiệm alert và script chấm; chụp ảnh Grafana, Prometheus, trace chậm bằng Chrome headless.
 - **Kiểm tra lại phát hiện gì:** cost/câu đúng ghi sai (0.00003487, JSON là 0.00003485); nhận xét "avg gần như không đổi" và "gần tuyến tính" sai; Part 4.1 ghi như đã chạy nhưng chưa chạy; ảnh Grafana chỉ có một panel. Các lỗi này đã được sửa, số đo lại bằng lệnh thật. Khi đặt key trên Railway, `auth.py` trả 500 với key ngoài ASCII (`compare_digest` ném TypeError); đã sửa sang so sánh bytes để trả 401.
+- **Railway:** Claude viết script đặt key và kiểm tra, học viên tự chạy script đó (script chạy cả `railway up`). `test.png` được Claude dựng lại từ output terminal; `dashboard.png` là ảnh chụp trang Railway đã cắt phần đầu trang.
 - **Cách kiểm tra:** `check_production_ready.py` báo PASS 12/12; đối chiếu số trong báo cáo với JSON/CSV bằng script. Các lệnh này do Claude chạy.

@@ -1,6 +1,6 @@
 # Deployment Information — Day 14 (agent Part 6)
 
-> **Agent Part 6** (`06-lab-complete/`) đã deploy lên Railway bằng `railway.toml`. App và Redis đang chạy; phần còn lại là tự đặt `AGENT_API_KEY`, kiểm tra `/ask` với key hợp lệ và bổ sung ảnh dashboard/test.
+> **Agent Part 6** (`06-lab-complete/`) đã deploy lên Railway bằng `railway.toml`, kèm Redis. Cả 4 lệnh tự kiểm CP6 đều đạt.
 
 ## Public URL
 
@@ -12,18 +12,23 @@ App đã được deploy từ `06-lab-complete/` bằng Railway CLI; Redis servi
 - `GET /ready` → HTTP 200 (Redis kết nối được)
 - `POST /ask` với JSON hợp lệ nhưng không có key → HTTP 401
 
-Kiểm lại lúc 21 giờ ngày 2026-11-25: `/health` 200, `/ready` 200, `/ask` không key 401, `/ask` sai key 401.
+Chạy 4 lệnh tự kiểm lúc 2026-11-25 21:35:27 (deployment `6954ddbc`):
 
-**Chưa kiểm được:** `/ask` với key hợp lệ → 200. `AGENT_API_KEY` phải được đặt trong Railway Variables, không ghi vào repo. Ảnh endpoint: `screenshots/running.png`.
+```
+GET  /health              -> 200
+GET  /ready               -> 200
+POST /ask without key     -> 401
+POST /ask with X-API-Key  -> 200
+```
 
 ## Platform
 
 Railway (builder `DOCKERFILE`, `healthcheckPath = /health`) + Redis add-on.
 (Có thể dùng Render thay thế — xem `06-lab-complete/render.yaml`.)
 
-## Environment Variables cần đặt sau khi deploy (KHÔNG ghi trong code)
+## Environment Variables Set (đặt trên nền tảng, KHÔNG ghi trong code)
 
-- `AGENT_API_KEY` — **còn cần đặt thủ công** trong Railway Variables; không gửi key cho người khác.
+- `AGENT_API_KEY` — đã đặt trong Railway Variables, không ghi trong repo.
 - `REDIS_URL` — đã liên kết tới biến của Redis add-on.
 - `RATE_LIMIT_PER_MINUTE=10`, `DAILY_BUDGET_USD=10`, `MONTHLY_BUDGET_USD=0`, `ENVIRONMENT=production`, `LOG_LEVEL=INFO`, `DEBUG=false` — đã cấu hình.
 - `PORT` — nền tảng tự cấp (Dockerfile đã dùng `${PORT:-8000}`)
@@ -74,5 +79,5 @@ Sau khi có URL: `python check_production_ready.py --public-url "$BASE"` để k
 
 - Đã có ảnh endpoint đang chạy: `screenshots/running.png`.
 - Railway Dashboard (agent-api và Redis Online): `screenshots/dashboard.png`.
-- Còn thiếu ảnh test `/ask` thành công (`screenshots/test.png`) vì `AGENT_API_KEY` chưa được đặt trên Railway.
+- Kết quả 4 lệnh tự kiểm: `screenshots/test.png` (dựng lại từ output terminal).
 - Ảnh benchmark/observability hiện có được liệt kê trong `BENCHMARK_REPORT.md`.
