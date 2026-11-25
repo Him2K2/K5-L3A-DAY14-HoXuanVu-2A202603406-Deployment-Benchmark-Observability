@@ -12,7 +12,9 @@ App đã được deploy từ `06-lab-complete/` bằng Railway CLI; Redis servi
 - `GET /ready` → HTTP 200 (Redis kết nối được)
 - `POST /ask` với JSON hợp lệ nhưng không có key → HTTP 401
 
-`AGENT_API_KEY` chưa được cấu hình. Hãy tự đặt biến này trong Railway Dashboard trước khi kiểm tra `/ask` với key hợp lệ; không gửi key qua chat hoặc ghi vào repo. Sau khi đặt key, request `/ask` có key hợp lệ phải trả HTTP 200. Ảnh endpoint đang chạy: `screenshots/running.png`.
+Kiểm lại lúc 21 giờ ngày 2026-11-25: `/health` 200, `/ready` 200, `/ask` không key 401, `/ask` sai key 401.
+
+**Chưa kiểm được:** `/ask` với key hợp lệ → 200. `AGENT_API_KEY` phải được đặt trong Railway Variables, không ghi vào repo. Ảnh endpoint: `screenshots/running.png`.
 
 ## Platform
 
@@ -63,7 +65,7 @@ Trước khi deploy đã xác nhận agent đạt chuẩn production ngay tại 
 
 ```bash
 cd 06-lab-complete
-python check_production_ready.py        # → 🎉 PASS 12/12 · 43/43 checks passed
+python check_production_ready.py        # → 🎉 PASS 12/12 · 44/44 checks passed
 ```
 
 Sau khi có URL: `python check_production_ready.py --public-url "$BASE"` để kiểm tra luôn cả bản deploy.
