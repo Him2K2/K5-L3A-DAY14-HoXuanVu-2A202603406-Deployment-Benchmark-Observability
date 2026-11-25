@@ -65,7 +65,7 @@ Trước khi deploy đã xác nhận agent đạt chuẩn production ngay tại 
 
 ```bash
 cd 06-lab-complete
-python check_production_ready.py        # → 🎉 PASS 12/12 · 44/44 checks passed
+python check_production_ready.py        # → 🎉 PASS 12/12 · 43/43 checks passed
 ```
 
 Sau khi có URL: `python check_production_ready.py --public-url "$BASE"` để kiểm tra luôn cả bản deploy.
