@@ -339,7 +339,7 @@ Chạy `python check_production_ready.py --public-url https://agent-api-producti
 ================================================================
 ```
 
-Chi tiết trong cùng lần chạy: image 160 MB; `docker stop` exit code 0 sau 1.0s; 429 sau 5 request thành công và vẫn 429 sau khi restart agent; Redis mất kết nối → `/ready` 503, `/health` 200.
+Chi tiết trong cùng lần chạy: image 160 MB; `docker stop` exit code 0 sau 0.6s; 429 sau 5 request thành công và vẫn 429 sau khi restart agent; Redis mất kết nối → `/ready` 503, `/health` 200.
 
 ---
 
@@ -353,5 +353,5 @@ Chi tiết trong cùng lần chạy: image 160 MB; `docker stop` exit code 0 sau
   - Thêm 2 entry vào `KNOWLEDGE_BASE` (Exercise 7.3).
   - Sửa `benchmark-observability/production/Dockerfile` của đề (đặt `HOME`, `PYTHONPATH`) vì container báo `No module named 'uvicorn'`.
   - Chạy các lệnh đo Part 1, 2, 4, 5, load test, eval, Exercise 7.4, thí nghiệm alert và script chấm; chụp ảnh Grafana, Prometheus, trace chậm bằng Chrome headless.
-- **Kiểm tra lại phát hiện gì:** cost/câu đúng ghi sai (0.00003487, JSON là 0.00003485); nhận xét "avg gần như không đổi" và "gần tuyến tính" sai; Part 4.1 ghi như đã chạy nhưng chưa chạy; ảnh Grafana chỉ có một panel. Các lỗi này đã được sửa, số đo lại bằng lệnh thật.
+- **Kiểm tra lại phát hiện gì:** cost/câu đúng ghi sai (0.00003487, JSON là 0.00003485); nhận xét "avg gần như không đổi" và "gần tuyến tính" sai; Part 4.1 ghi như đã chạy nhưng chưa chạy; ảnh Grafana chỉ có một panel. Các lỗi này đã được sửa, số đo lại bằng lệnh thật. Khi đặt key trên Railway, `auth.py` trả 500 với key ngoài ASCII (`compare_digest` ném TypeError); đã sửa sang so sánh bytes để trả 401.
 - **Cách kiểm tra:** `check_production_ready.py` báo PASS 12/12; đối chiếu số trong báo cáo với JSON/CSV bằng script. Các lệnh này do Claude chạy.

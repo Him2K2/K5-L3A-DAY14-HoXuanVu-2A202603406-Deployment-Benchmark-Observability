@@ -18,7 +18,10 @@ api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 def verify_api_key(provided_key: str = Security(api_key_header)) -> str:
     """Dependency cho FastAPI — dùng trong /ask: Depends(verify_api_key)."""
     expected = settings.agent_api_key
-    if not expected or not provided_key or not secrets.compare_digest(provided_key, expected):
+    # So sánh dạng bytes: compare_digest với str ngoài ASCII ném TypeError (thành lỗi 500 thay vì 401).
+    if not expected or not provided_key or not secrets.compare_digest(
+        provided_key.encode("utf-8"), expected.encode("utf-8")
+    ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or missing API key",
