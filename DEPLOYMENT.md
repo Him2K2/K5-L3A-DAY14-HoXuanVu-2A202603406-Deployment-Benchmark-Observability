@@ -73,5 +73,6 @@ Sau khi có URL: `python check_production_ready.py --public-url "$BASE"` để k
 ## Screenshots
 
 - Đã có ảnh endpoint đang chạy: `screenshots/running.png`.
-- Còn thiếu ảnh Railway Dashboard (`screenshots/dashboard.png`) và ảnh test `/ask` thành công sau khi tự đặt `AGENT_API_KEY` (`screenshots/test.png`).
+- Railway Dashboard (agent-api và Redis Online): `screenshots/dashboard.png`.
+- Còn thiếu ảnh test `/ask` thành công (`screenshots/test.png`) vì `AGENT_API_KEY` chưa được đặt trên Railway.
 - Ảnh benchmark/observability hiện có được liệt kê trong `BENCHMARK_REPORT.md`.
